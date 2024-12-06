@@ -218,14 +218,17 @@
   </macro>
   <macro name="title">
     <choose>
-      <if variable="title" match="none">
+      <if variable="title-short">
+        <text variable="title-short" font-style="italic"/>
+      </if>
+      <else-if variable="title" match="none">
         <choose>
           <if type="personal_communication speech thesis" match="none">
             <text variable="genre" text-case="capitalize-first"/>
           </if>
         </choose>
-      </if>
-      <else-if type="bill book graphic legislation motion_picture song" match="any">
+      </else-if>
+      <else-if type="bill book classic graphic legislation motion_picture song" match="any">
         <text variable="title" text-case="title" font-style="italic"/>
         <group prefix=" (" suffix=")" delimiter=" ">
           <text term="version"/>
@@ -658,22 +661,19 @@
       <choose>
         <if type="classic">
           <group delimiter=" ">
-            <text variable="title-short" font-style="italic"/>
+            <text macro="contributors-short"/>
             <text macro="point-locators"/>
           </group>
         </if>
         <else>
           <group delimiter=", ">
             <choose>
-              <if variable="title-short">
-                <text variable="title-short" font-style="italic"/>
-              </if>
-              <else-if variable="issued" match="any">
+              <if variable="issued" match="any">
                 <group delimiter=" ">
                   <text macro="contributors-short"/>
                   <text macro="date-in-text"/>
                 </group>
-              </else-if>
+              </if>
               <!---comma before forthcoming and n.d.-->
               <else>
                 <group delimiter=", ">
@@ -696,9 +696,7 @@
     </sort>
     <layout suffix=".">
       <choose>
-        <if type="classic"/>
-        <else-if variable="title-short"/>
-        <else>
+        <if variable="title-short" type="classic"  match="none">
           <group delimiter=". ">
             <text macro="contributors"/>
             <text macro="date"/>
@@ -716,7 +714,7 @@
           <text macro="issue"/>
           <text macro="locators-article"/>
           <text macro="access" prefix=". "/>
-        </else>
+        </if>
       </choose>
     </layout>
   </bibliography>
