@@ -1,43 +1,48 @@
 <?xml version="1.0" encoding="utf-8"?>
-<style xmlns="http://purl.org/net/xbiblio/csl" class="in-text" version="1.0" et-al-min="19" et-al-use-first="1" demote-non-dropping-particle="never" default-locale="en-US">
+<style xmlns="http://purl.org/net/xbiblio/csl" class="in-text" version="1.0" demote-non-dropping-particle="never" default-locale="es-MX">
   <info>
-    <title>eNeuro</title>
-    <id>http://www.zotero.org/styles/eneuro</id>
-    <link href="http://www.zotero.org/styles/eneuro" rel="self"/>
+    <title>Nueva Norma Estudios de la Humanidad (with titles)</title>
+    <title-short>EDH&#8212;N</title-short>
+    <id>http://www.zotero.org/styles/nueva-norma-estudios-de-la-humanidad</id>
+    <link href="http://www.zotero.org/styles/nueva-norma-estudios-de-la-humanidad" rel="self"/>
     <link href="http://www.zotero.org/styles/elsevier-harvard" rel="template"/>
-    <link href="https://www.eneuro.org/content/preparing-manuscript#organization" rel="documentation"/>
     <author>
-      <name>Patrick O'Brien, PhD</name>
+      <name>@edhudg</name>
     </author>
+    <contributor>
+      <name>Brenton Wiernik</name>
+    </contributor>
     <category citation-format="author-date"/>
     <category field="biology"/>
-    <category field="medicine"/>
-    <eissn>2373-2822</eissn>
-    <updated>2024-11-10T11:29:01+00:00</updated>
+    <category field="generic-base"/>
+    <category field="humanities"/>
+    <updated>2025-01-09T18:05:07+00:00</updated>
     <rights license="http://creativecommons.org/licenses/by-sa/3.0/">This work is licensed under a Creative Commons Attribution-ShareAlike 3.0 License</rights>
   </info>
   <macro name="container">
     <choose>
       <if type="chapter paper-conference" match="any">
-        <text term="in" text-case="capitalize-first" prefix=" " suffix=": "/>
-        <group delimiter=", " suffix=" ">
-          <text variable="container-title" text-case="title"/>
-          <text variable="collection-title" text-case="title"/>
+        <group delimiter=" ">
+          <text term="in"/>
+          <group delimiter=", ">
+            <names variable="editor translator" delimiter=", ">
+              <name delimiter-precedes-last="always"/>
+              <label form="short" text-case="capitalize-first" prefix=" (" suffix=")"/>
+            </names>
+            <text variable="container-title" text-case="title" font-style="italic"/>
+            <text variable="collection-title" text-case="title"/>
+          </group>
         </group>
-        <names variable="editor translator" delimiter=", " prefix="(" suffix=")">
-          <name delimiter-precedes-last="always" initialize-with="" name-as-sort-order="all" sort-separator=" "/>
-          <label form="short" strip-periods="true" prefix=" "/>
-        </names>
       </if>
       <else-if type="bill book graphic legal_case legislation motion_picture report song" match="any">
-        <group prefix=", " delimiter=", ">
+        <group delimiter=", ">
           <text variable="container-title"/>
           <text variable="collection-title"/>
         </group>
       </else-if>
       <else>
-        <group prefix=". " delimiter=", ">
-          <text variable="container-title" form="short" strip-periods="true"/>
+        <group delimiter=", ">
+          <text variable="container-title" font-style="italic"/>
           <text variable="collection-title"/>
         </group>
       </else>
@@ -45,10 +50,10 @@
   </macro>
   <macro name="author">
     <names variable="author">
-      <name delimiter-precedes-last="always" initialize-with="" name-as-sort-order="all" sort-separator=" "/>
+      <name and="text" delimiter-precedes-last="always" name-as-sort-order="first"/>
       <label form="short" prefix=" (" suffix=")" text-case="capitalize-first"/>
       <substitute>
-        <names variable="editor"/>
+        <names variable="editor compiler"/>
         <names variable="translator"/>
         <text macro="title"/>
       </substitute>
@@ -56,7 +61,7 @@
   </macro>
   <macro name="author-short">
     <names variable="author">
-      <name form="short" and="text" initialize-with=". "/>
+      <name form="short" and="text" delimiter=", " initialize-with=". "/>
       <substitute>
         <names variable="editor"/>
         <names variable="translator"/>
@@ -73,48 +78,53 @@
   </macro>
   <macro name="access">
     <choose>
-      <if type="webpage">
+      <if variable="DOI">
+        <text variable="DOI" prefix="https://doi.org/"/>
+      </if>
+      <else-if type="webpage post-weblog" match="any">
         <group delimiter=" ">
           <text value="URL"/>
           <text variable="URL"/>
           <group prefix="(" suffix=").">
-            <text term="accessed" suffix=" "/>
-            <date variable="accessed">
-              <date-part name="month" form="numeric" suffix="."/>
-              <date-part name="day" suffix="."/>
+            <text term="accessed" prefix="[" suffix="] "/>
+            <date form="text" variable="accessed">
+              <date-part name="day"/>
+              <date-part name="month" form="numeric"/>
               <date-part name="year" form="short"/>
             </date>
           </group>
         </group>
-      </if>
+      </else-if>
     </choose>
   </macro>
   <macro name="title">
     <choose>
       <if type="report thesis" match="any">
-        <text variable="title"/>
-        <group prefix=" (" suffix=")" delimiter=" ">
+        <text variable="title" prefix="«" suffix="»"/>
+        <group delimiter=" " prefix=" ">
           <text variable="genre"/>
           <text variable="number" prefix="No. "/>
         </group>
       </if>
       <else-if type="bill book graphic legal_case legislation motion_picture report song speech" match="any">
-        <text variable="title"/>
-        <text macro="edition" prefix=", "/>
+        <group delimiter=", ">
+          <text variable="title" font-style="italic"/>
+          <text macro="edition"/>
+        </group>
       </else-if>
       <else-if type="webpage">
         <text variable="title"/>
         <text value="WWW Document" prefix=" [" suffix="]"/>
       </else-if>
       <else>
-        <text variable="title"/>
+        <text variable="title" font-style="normal" prefix="«" suffix="»"/>
       </else>
     </choose>
   </macro>
   <macro name="publisher">
-    <group delimiter=": ">
+    <group delimiter=", ">
       <text variable="publisher-place"/>
-      <text variable="publisher" form="short"/>
+      <text variable="publisher"/>
     </group>
   </macro>
   <macro name="event">
@@ -141,7 +151,7 @@
     <group delimiter=" ">
       <choose>
         <if is-numeric="edition">
-          <number variable="edition" form="ordinal"/>
+          <number variable="edition" form="long-ordinal"/>
         </if>
         <else>
           <text variable="edition" suffix="."/>
@@ -153,45 +163,47 @@
   <macro name="locators">
     <choose>
       <if type="article-journal article-magazine article-newspaper" match="any">
-        <group delimiter=":" prefix=" ">
-          <group>
-            <text variable="volume"/>
+        <group delimiter=", ">
+          <group delimiter=",">
+            <text variable="volume" prefix="vol. "/>
+            <text variable="issue" prefix=" núm. "/>
           </group>
-          <text variable="page"/>
+          <text variable="page" prefix="p. "/>
         </group>
       </if>
       <else-if type="bill book graphic legal_case legislation motion_picture report song thesis" match="any">
-        <group delimiter=", " prefix=". ">
+        <group delimiter=", ">
           <text macro="event"/>
           <text macro="publisher"/>
+          <text variable="volume" prefix=" vol. "/>
         </group>
       </else-if>
       <else-if type="chapter paper-conference" match="any">
-        <group delimiter=" " prefix=", ">
+        <group delimiter=", ">
           <text macro="event"/>
-          <group>
-            <label strip-periods="true" variable="page" form="short"/>
-            <text variable="page" suffix="."/>
-          </group>
           <text macro="publisher"/>
+          <group>
+            <label plural="never" suffix=" " variable="page" form="short"/>
+            <text variable="page"/>
+          </group>
         </group>
       </else-if>
       <else-if type="patent">
-        <text variable="number" prefix=". "/>
+        <text variable="number"/>
       </else-if>
     </choose>
   </macro>
   <citation et-al-min="3" et-al-use-first="1" disambiguate-add-givenname="true" disambiguate-add-year-suffix="true" collapse="year" cite-group-delimiter=", ">
     <sort>
-      <key macro="issued" sort="ascending"/>
       <key macro="author"/>
+      <key macro="issued" sort="descending"/>
     </sort>
     <layout prefix="(" suffix=")" delimiter="; ">
       <group delimiter=", ">
         <text macro="author-short"/>
         <text macro="issued"/>
         <group delimiter=" ">
-          <label variable="locator" form="short"/>
+          <label plural="never" variable="locator" form="short"/>
           <text variable="locator"/>
         </group>
       </group>
@@ -203,16 +215,16 @@
       <key macro="issued" sort="descending"/>
     </sort>
     <layout>
-      <group suffix=".">
+      <group delimiter=", " suffix=".">
         <text macro="author"/>
-        <text macro="issued" prefix=" (" suffix=")"/>
-        <group prefix=" ">
+        <text macro="issued"/>
+        <group delimiter=", ">
           <text macro="title"/>
           <text macro="container"/>
           <text macro="locators"/>
+          <text macro="access" prefix="&lt; " suffix="&gt;"/>
         </group>
       </group>
-      <text macro="access" prefix=". "/>
     </layout>
   </bibliography>
 </style>
