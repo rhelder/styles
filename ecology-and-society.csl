@@ -21,11 +21,13 @@
   <macro name="container-contributors">
     <choose>
       <if type="chapter paper-conference" match="any">
-        <text term="in" suffix=" " font-style="italic"/>
+        <group delimiter=" ">
+         <text term="in" font-style="italic"/>
         <names variable="editor translator" delimiter=", ">
           <name and="text" initialize-with=". " delimiter=", "/>
           <label form="long" prefix=", " suffix="."/>
         </names>
+</group>
       </if>
     </choose>
   </macro>
@@ -109,7 +111,7 @@
         </group>
       </if>
       <else>
-        <text prefix=" (" term="no date" suffix=")" form="short"/>
+        <text prefix="(" term="no date" suffix=")" form="short"/>
       </else>
     </choose>
   </macro>
